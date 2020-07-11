@@ -28,8 +28,8 @@ module.exports = (message) => {
         message.channel.send('Misa is not allowed to talk to a stranger.\nIf you want to talk to Misa, please visit #misa-bot-dev text channel!');
     }
 
-    // All Channel
+    // Other Channel
     else {
-
+        GeneralMode(message);
     }
 };

@@ -1,7 +1,7 @@
 var Axios = require('axios');
 var dotenv = require('dotenv');
 var Misa = require('../../configs/misa');
-var Discord = require('discord.js');
+var hiragana = require('../../storage/hiragana.json');
 
 dotenv.config();
 
@@ -18,6 +18,7 @@ module.exports = (message) => {
 
     // Handy function ~
     send = (string) => message.channel.send(string);
+    yaml = (string) => '```yaml\n' + string + '\n```';
 
     if (content == 'misa') {
         send('Yes?');
@@ -228,5 +229,10 @@ module.exports = (message) => {
 
     else if (content == 'misa code') {
         send(`Misa's source code: https://github.com/LittleBlue512/misa-discord-bot`);
+    }
+
+    else if (content == 'misa hiragana') {
+        var randIndex = Math.round(Math.random() * hiragana.length);
+        send(yaml(`Kana: ${hiragana[randIndex].kana}\nRoumaji: ${hiragana[randIndex].roumaji}\nType: ${hiragana[randIndex].type}`));
     }
 };

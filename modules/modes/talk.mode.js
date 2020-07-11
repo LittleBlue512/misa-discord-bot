@@ -1,4 +1,3 @@
-var Misa = require('../../configs/misa');
 var connection = require('../../configs/database');
 var Command = connection.models.Command;
 
