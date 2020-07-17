@@ -2,6 +2,8 @@ var Axios = require('axios');
 var dotenv = require('dotenv');
 var Misa = require('../../configs/misa');
 var hiragana = require('../../storage/hiragana.json');
+var connection = require('../../configs/database');
+var Kanji = connection.models.Kanji;
 
 dotenv.config();
 
@@ -231,8 +233,21 @@ module.exports = (message) => {
         send(`Misa's source code: https://github.com/LittleBlue512/misa-discord-bot`);
     }
 
-    else if (content == 'misa hiragana') {
+    else if (content == 'misa hiragana rand') {
         var randIndex = Math.round(Math.random() * hiragana.length);
-        send(yaml(`Kana: ${hiragana[randIndex].kana}\nRoumaji: ${hiragana[randIndex].roumaji}\nType: ${hiragana[randIndex].type}`));
+        send(yaml(`${hiragana[randIndex].kana}`));
+    }
+
+    else if (content == 'misa kanji rand') {
+        Kanji
+            .find()
+            .then(kanjis => {
+                var randIndex = Math.round(Math.random() * kanjis.length);
+                send(yaml(kanjis[randIndex].character));
+            })
+            .catch(err => {
+                console.log(err);
+                send('Look like something went wrong, I am going to have my master look into it!');
+            });
     }
 };

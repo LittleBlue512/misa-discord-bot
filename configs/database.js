@@ -20,6 +20,14 @@ var CommandSchema = new Schema({
     }
 });
 
+var KanjiSchema = new Schema({
+    character: {
+        type: String,
+        required: true
+    }
+});
+
 connection.model('Command', CommandSchema);
+connection.model('Kanji', KanjiSchema);
 
 module.exports = connection;

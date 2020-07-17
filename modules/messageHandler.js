@@ -30,6 +30,8 @@ module.exports = (message) => {
 
     // Other Channel
     else {
+        DevMode(message);
+        StaffMode(message);
         GeneralMode(message);
     }
 };

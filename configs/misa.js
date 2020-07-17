@@ -17,7 +17,9 @@ Bot.help_list = [
     'misa binance [symbol]',
     'misa avatar [identidier]',
     'misa photo [width] [height]',
-    'misa code'
+    'misa code',
+    'misa hiragana rand',
+    'misa kanji rand'
 ];
 
 Bot.dev_list = [
@@ -32,7 +34,9 @@ Bot.staff_list = [
     'misa staff',
     'misa staff help',
     'misa staff command list',
-    'misa staff command add [key] [response]'
+    'misa staff command add [key] [response]',
+    'misa staff kanji add <kanji>',
+    'misa staff kanji list'
 ];
 
 Bot.prefixs = {
