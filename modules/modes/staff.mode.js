@@ -72,14 +72,14 @@ module.exports = (message) => {
         if (kanji) {
             new Kanji({ character: kanji })
                 .save()
-                .then(() => send(`完了した！`))
+                .then(() => send(`Done!`))
                 .catch(err => {
                     console.log(err);
                     send('Master! I encountered an error while trying to find the commands in the database!');
                 });
         } else {
             // Invalid inputs
-            send(`ごめんなさい、わかりませんです`);
+            send(`Invalid input!`);
         }
     }
 
@@ -96,5 +96,24 @@ module.exports = (message) => {
                 console.log(err);
                 send('Master! I encountered an error while trying to find the kanji in the database!');
             })
+    }
+
+    else if (content.startsWith('misa staff kanji delete')) {
+        var words = content.split(' ');
+        var kanji = words[4];
+        if (kanji) {
+            Kanji
+                .findOneAndDelete({ character: kanji })
+                .then(() => {
+                    send(`Done!`);
+                })
+                .catch(err => {
+                    console.log(err);
+                    send('Master! I encountered an error while trying to find the kanji in the database!');
+                });
+        } else {
+            // Invalid inputs
+            send(`Invalid input!`);
+        }
     }
 }
