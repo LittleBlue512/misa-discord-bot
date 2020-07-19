@@ -36,8 +36,9 @@ Bot.staff_list = [
     'misa staff command list',
     'misa staff command add [key] [response]',
     'misa staff kanji list',
+    'misa staff kanji list <from> <to>',
     'misa staff kanji add <kanji>',
-    'misa staff kanji delete <key>'
+    'misa staff kanji delete <key>',
 ];
 
 Bot.prefixs = {
