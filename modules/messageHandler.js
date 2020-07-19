@@ -25,7 +25,7 @@ module.exports = (message) => {
 
     // DM channel
     else if (message.channel.type == 'dm') {
-        message.channel.send('Misa is not allowed to talk to a stranger.\nIf you want to talk to Misa, please visit #misa-bot-dev text channel!');
+        message.channel.send('Sorry, Misa is not allowed to talk to a stranger!');
     }
 
     // Other Channel
