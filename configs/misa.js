@@ -19,7 +19,9 @@ Bot.help_list = [
     'misa photo [width] [height]',
     'misa code',
     'misa hiragana rand',
-    'misa kanji rand'
+    'misa kanji rand',
+    'misa kanji list',
+    'misa kanji list <from> <to>'
 ];
 
 Bot.dev_list = [

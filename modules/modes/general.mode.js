@@ -250,4 +250,47 @@ module.exports = (message) => {
                 send('Look like something went wrong, I am going to have my master look into it!');
             });
     }
+
+    else if (content.startsWith('misa kanji list')) {
+        var words = content.split(' ');
+        if (words.length == 3) {
+            Kanji
+                .find()
+                .then(kanjis => {
+                    var cnt = 1;
+                    var output = '';
+                    kanjis.forEach(kanji => output += `${cnt++}: ${kanji.character}\n`)
+                    send(yaml(output));
+                })
+                .catch(err => {
+                    console.log(err);
+                    send('Master! I encountered an error while trying to find the kanji in the database!');
+                })
+        } else {
+            if (words.length != 5) {
+                send(`Invalid input!`);
+            } else {
+                var fromIndex = words[3];
+                var toIndex = words[4];
+                Kanji
+                    .find()
+                    .then(kanjis => {
+                        if (fromIndex < 1 || fromIndex > kanjis.length || toIndex < 1 || toIndex <= fromIndex || toIndex > kanjis.length) {
+                            send(`Invalid input!`);
+                        } else {
+                            var cnt = fromIndex;
+                            var output = '';
+                            var subArray = kanjis.slice(fromIndex - 1, toIndex);
+                            subArray.forEach(kanji => output += `${cnt++}: ${kanji.character}\n`)
+                            send(yaml(output));
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        send('Master! I encountered an error while trying to find the kanji in the database!');
+                    })
+            }
+        }
+
+    }
 };
