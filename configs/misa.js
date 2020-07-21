@@ -25,16 +25,11 @@ Bot.help_list = [
 Bot.dev_list = [
     'misa dev',
     'misa dev help',
-    'misa dev command list',
-    'misa dev command clear',
-    'misa dev command add [key] [response]'
 ];
 
 Bot.staff_list = [
     'misa staff',
     'misa staff help',
-    'misa staff command list',
-    'misa staff command add [key] [response]',
     'misa staff kanji list',
     'misa staff kanji list <from> <to>',
     'misa staff kanji add <kanji>',
@@ -49,8 +44,7 @@ Bot.prefixs = {
 };
 
 Bot.channels = {
-    dev: 'misa-bot-dev',
-    talk: 'misa-bot-talk'
+    dev: 'misa-bot-dev'
 };
 
 Bot.master = 'LittleBlue';

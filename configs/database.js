@@ -9,17 +9,6 @@ var mongoUri = process.env.DATABASE_STRING;
 var connection = mongoose.createConnection(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Models
-var CommandSchema = new Schema({
-    key: {
-        type: String,
-        required: true,
-    },
-    response: {
-        type: String,
-        required: true
-    }
-});
-
 var KanjiSchema = new Schema({
     character: {
         type: String,
@@ -27,7 +16,6 @@ var KanjiSchema = new Schema({
     }
 });
 
-connection.model('Command', CommandSchema);
 connection.model('Kanji', KanjiSchema);
 
 module.exports = connection;

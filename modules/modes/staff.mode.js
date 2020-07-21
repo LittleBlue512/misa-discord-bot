@@ -32,40 +32,6 @@ module.exports = (message) => {
         send(output);
     }
 
-    else if (content == 'misa staff command list') {
-        Command
-            .find()
-            .then(commands => {
-                if (commands.length == 0) {
-                    send('The list of commands is empty!');
-                } else {
-                    var output = '';
-                    commands.forEach(command => output += `${command.key}: ${command.response}\n`)
-                    send(mono(output));
-                }
-            })
-            .catch(err => {
-                console.log(err);
-                send('Master! I encountered an error while trying to find the commands in the database!');
-            })
-    }
-
-    else if (content.startsWith('misa staff command add')) {
-        var startIndex1 = content.indexOf('[');
-        var endIndex1 = content.indexOf(']');
-        var startIndex2 = content.indexOf('[', startIndex1 + 1);
-        var endIndex2 = content.indexOf(']', endIndex1 + 1);
-        var key = content.substring(startIndex1 + 1, endIndex1);
-        var response = content.substring(startIndex2 + 1, endIndex2);
-        if (startIndex1 == -1 || endIndex1 == -1 || startIndex2 == -1 || endIndex2 == -1 || endIndex1 - startIndex1 == 1 || endIndex2 - startIndex2 == 1) {
-            send(`Invalid command!`)
-        } else {
-            var newCommand = new Command({ key, response });
-            newCommand.save();
-            send(`I'm adding [${key}: ${response}] to the list of commands!`);
-        }
-    }
-
     else if (content.startsWith('misa staff kanji add')) {
         var words = content.split(' ');
         var kanji = words[4];
