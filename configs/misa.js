@@ -33,7 +33,7 @@ Bot.staff_list = [
     'misa staff kanji list',
     'misa staff kanji list <from> <to>',
     'misa staff kanji add <kanji>',
-    'misa staff kanji remove <key>',
+    'misa staff kanji remove <kanji>',
     'misa staff kanji count'
 ];
 
