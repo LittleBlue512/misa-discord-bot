@@ -1,6 +1,5 @@
 var Misa = require('../../configs/misa');
 var connection = require('../../configs/database');
-var Command = connection.models.Command;
 var Kanji = connection.models.Kanji;
 
 module.exports = (message) => {
@@ -41,7 +40,7 @@ module.exports = (message) => {
                 .then(() => send(`Done!`))
                 .catch(err => {
                     console.log(err);
-                    send('Master! I encountered an error while trying to find the commands in the database!');
+                    send('Master! I encountered an error while trying to find the kanji in the database!');
                 });
         } else {
             // Invalid inputs
@@ -92,7 +91,7 @@ module.exports = (message) => {
 
     }
 
-    else if (content.startsWith('misa staff kanji delete')) {
+    else if (content.startsWith('misa staff kanji remove')) {
         var words = content.split(' ');
         var kanji = words[4];
         if (kanji) {
