@@ -293,4 +293,16 @@ module.exports = (message) => {
         }
 
     }
+
+    else if (content.startsWith('misa kanji count')) {
+        Kanji
+            .find()
+            .then(kanji => {
+                send(`There are ${kanji.length} kanji in the list!`);
+            })
+            .catch(err => {
+                console.log(err);
+                send('Master! I encountered an error while trying to find the kanji in the database!');
+            });
+    }
 };
