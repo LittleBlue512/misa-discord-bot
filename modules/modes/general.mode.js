@@ -166,33 +166,6 @@ module.exports = (message) => {
         }
     }
 
-    else if (content.startsWith('misa anime')) {
-        var startIndex = content.indexOf('[');
-        var endIndex = content.indexOf(']');
-        if (startIndex != -1 && endIndex != -1 && endIndex - startIndex != 1) {
-            var category = content.substring(startIndex + 1, endIndex).toLowerCase();
-            send(`I'm finding the data...`);
-            var randomOffset = Math.floor(Math.random() * 10);
-            Axios.get(Misa.apis.ANIME_API + `?filter[categories]=${category}&page[offset]=${randomOffset}`)
-                .then(res => {
-                    var maxLength = res.data.data.length;
-                    if (maxLength == 0) {
-                        send(`Sorry, I did't get any ${category} animes from the Kitsu API.`);
-                    } else {
-                        var randomIndex = Math.floor(Math.random() * maxLength);
-                        var title = res.data.data[randomIndex].attributes.titles.en_jp;
-                        send(`Here's a random ${category} anime from the Kitsu API:\n${title}`);
-                    }
-                })
-                .catch(err => {
-                    console.log(err);
-                    send('Look like something went wrong, I am going to have my master look into it!');
-                });
-        } else {
-            send(`Sorry, I don't understand your command.`);
-        }
-    }
-
     else if (content == 'misa quote') {
         send(`I'm finding a quote...`);
         Axios.get(Misa.apis.QUOTE_API)
