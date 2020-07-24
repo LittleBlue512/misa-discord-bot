@@ -144,18 +144,6 @@ module.exports = (message) => {
         }
     }
 
-    else if (content.startsWith('misa avatar')) {
-        var startIndex = content.indexOf('[');
-        var endIndex = content.indexOf(']');
-        var indentifier = content.substring(startIndex1 + 1, endIndex);
-        if (startIndex == -1 || endIndex == -1 || endIndex - startIndex == 1) {
-            send(`Sorry, I don't understand your command.`)
-        } else {
-            send(`I'm finding a avatar...`);
-            message.channel.send({ files: [Misa.apis.AVATAR_API + `/${indentifier}.png`] });
-        }
-    }
-
     else if (content.startsWith('misa binance')) {
         var startIndex = content.indexOf('[');
         var endIndex = content.indexOf(']');

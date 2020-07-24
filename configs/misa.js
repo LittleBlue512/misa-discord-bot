@@ -15,14 +15,13 @@ Bot.help_list = [
     'misa covid19 global',
     'misa anime [category]',
     'misa binance [symbol]',
-    'misa avatar [identidier]',
     'misa photo [width] [height]',
     'misa code',
     'misa hiragana rand',
     'misa kanji rand',
     'misa kanji list',
     'misa kanji list <from> <to>',
-    'misa staff kanji count'
+    'misa kanji count'
 ];
 
 Bot.dev_list = [
@@ -69,7 +68,6 @@ Bot.apis = {
     PROGRAMMING_QUOTE_API: 'https://programming-quotes-api.herokuapp.com/quotes/random',
     QUOTE_API: 'https://quote-garden.herokuapp.com/api/v2/quotes/random',
     PHOTO_API: 'https://picsum.photos',
-    AVATAR_API: 'https://api.adorable.io/avatars/285'
 };
 
 module.exports = Bot;
