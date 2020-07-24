@@ -1,7 +1,6 @@
 var Axios = require('axios');
 var dotenv = require('dotenv');
 var Misa = require('../../configs/misa');
-var hiragana = require('../../storage/hiragana.json');
 var connection = require('../../configs/database');
 var Kanji = connection.models.Kanji;
 
