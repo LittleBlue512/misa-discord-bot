@@ -49,10 +49,7 @@ Bot.channels = {
 
 Bot.master = 'LittleBlue';
 
-Bot.staffs = [
-    'LittleBlue',
-    'Ren'
-];
+Bot.staffs = [];
 
 Bot.apis = {
     CATPICS_API: 'https://api.thecatapi.com/v1/images/search',

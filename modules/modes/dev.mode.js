@@ -1,5 +1,6 @@
 var Misa = require('../../configs/misa');
 var connection = require('../../configs/database');
+var helpers = require('../helpers');
 var Staff = connection.models.Staff;
 
 module.exports = (message) => {
@@ -33,19 +34,9 @@ module.exports = (message) => {
     }
 
     else if (content == 'misa dev staff list') {
-        Staff
-            .find()
-            .then(staffs => {
-                if (staffs.length > 0) {
-                    send(yaml(staffs))
-                } else {
-                    send(`The list is empty!`);
-                }
-            })
-            .catch(err => {
-                send(`There's an error! Please check the logs master!`);
-                console.log(err);
-            });
+        var output = '';
+        Misa.staffs.forEach(staff => output += staff + '\n');
+        send(yaml(output));
     }
 
     else if (content.startsWith('misa dev staff add')) {
@@ -63,6 +54,8 @@ module.exports = (message) => {
                             .save()
                             .then(() => {
                                 send(`${username} saved!`);
+                                // Update staffs
+                                helpers.getStaffs();
                             })
                             .catch(err => {
                                 send(`I encounter an error while trying to save the username to the database!`);
@@ -94,6 +87,8 @@ module.exports = (message) => {
                             .remove()
                             .then(staff => {
                                 send(`${staff.username} removed!`);
+                                // Update staffs
+                                helpers.getStaffs();
                             })
                             .catch(err => {
                                 send(`There's an error! Please check the logs master!`);
