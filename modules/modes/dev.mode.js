@@ -1,5 +1,4 @@
 var Misa = require('../../configs/misa');
-var connection = require('../../configs/database');
 
 module.exports = (message) => {
     var content = message.content;
