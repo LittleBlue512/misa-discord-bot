@@ -30,11 +30,8 @@ Bot.dev_list = [
 Bot.staff_list = [
     'misa staff',
     'misa staff help',
-    'misa staff kanji list',
-    'misa staff kanji list <from> <to>',
     'misa staff kanji add <kanji>',
     'misa staff kanji remove <kanji>',
-    'misa staff kanji count'
 ];
 
 Bot.prefixs = {

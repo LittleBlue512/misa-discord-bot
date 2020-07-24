@@ -48,49 +48,6 @@ module.exports = (message) => {
         }
     }
 
-    else if (content.startsWith('misa staff kanji list')) {
-        var words = content.split(' ');
-        if (words.length == 4) {
-            Kanji
-                .find()
-                .then(kanjis => {
-                    var cnt = 1;
-                    var output = '';
-                    kanjis.forEach(kanji => output += `${cnt++}: ${kanji.character}\n`)
-                    send(yaml(output));
-                })
-                .catch(err => {
-                    console.log(err);
-                    send('Master! I encountered an error while trying to find the kanji in the database!');
-                })
-        } else {
-            if (words.length != 6) {
-                send(`Invalid input!`);
-            } else {
-                var fromIndex = words[4];
-                var toIndex = words[5];
-                Kanji
-                    .find()
-                    .then(kanjis => {
-                        if (fromIndex < 1 || fromIndex > kanjis.length || toIndex < 1 || toIndex <= fromIndex || toIndex > kanjis.length) {
-                            send(`Invalid input!`);
-                        } else {
-                            var cnt = fromIndex;
-                            var output = '';
-                            var subArray = kanjis.slice(fromIndex - 1, toIndex);
-                            subArray.forEach(kanji => output += `${cnt++}: ${kanji.character}\n`)
-                            send(yaml(output));
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        send('Master! I encountered an error while trying to find the kanji in the database!');
-                    })
-            }
-        }
-
-    }
-
     else if (content.startsWith('misa staff kanji remove')) {
         var words = content.split(' ');
         var kanji = words[4];
@@ -108,17 +65,5 @@ module.exports = (message) => {
             // Invalid inputs
             send(`Invalid input!`);
         }
-    }
-
-    else if (content.startsWith('misa staff kanji count')) {
-        Kanji
-            .find()
-            .then(kanji => {
-                send(`There are ${kanji.length} kanji in the list!`);
-            })
-            .catch(err => {
-                console.log(err);
-                send('Master! I encountered an error while trying to find the kanji in the database!');
-            });
     }
 }
