@@ -194,11 +194,6 @@ module.exports = (message) => {
         send(`Misa's source code: https://github.com/LittleBlue512/misa-discord-bot`);
     }
 
-    else if (content == 'misa hiragana rand') {
-        var randIndex = Math.round(Math.random() * hiragana.length);
-        send(yaml(`${hiragana[randIndex].kana}`));
-    }
-
     else if (content == 'misa kanji rand') {
         Kanji
             .find()
