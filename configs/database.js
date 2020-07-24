@@ -16,6 +16,14 @@ var KanjiSchema = new Schema({
     }
 });
 
+var StaffSchema = new Schema({
+    username: {
+        type: String,
+        required: true
+    }
+});
+
 connection.model('Kanji', KanjiSchema);
+connection.model('Staff', StaffSchema);
 
 module.exports = connection;

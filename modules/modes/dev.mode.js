@@ -1,15 +1,18 @@
 var Misa = require('../../configs/misa');
+var connection = require('../../configs/database');
+var Staff = connection.models.Staff;
 
 module.exports = (message) => {
     var content = message.content;
-    var username = message.author.username;
+    var authorUsername = message.author.username;
 
     // Convert input string to lowercase
+    originalContent = content;
     content = content.toLowerCase();
 
     // Validations
     if (message.author.bot) return;                         // Ignore bots
-    if (username != Misa.master) return;                    // Only master
+    if (authorUsername != Misa.master) return;              // Only master
     if (!content.startsWith(Misa.prefixs.dev)) return;      // Prefix required
 
     // Handy function ~
@@ -27,5 +30,85 @@ module.exports = (message) => {
             output += `\n- ${command}`;
         });
         send(output);
+    }
+
+    else if (content == 'misa dev staff list') {
+        Staff
+            .find()
+            .then(staffs => {
+                if (staffs.length > 0) {
+                    send(yaml(staffs))
+                } else {
+                    send(`The list is empty!`);
+                }
+            })
+            .catch(err => {
+                send(`There's an error! Please check the logs master!`);
+                console.log(err);
+            });
+    }
+
+    else if (content.startsWith('misa dev staff add')) {
+        var startIndex = content.indexOf('[');
+        var endIndex = content.indexOf(']');
+        if (startIndex != -1 && endIndex != -1 && endIndex - startIndex > 1) {
+            var username = originalContent.substring(startIndex + 1, endIndex);
+            Staff
+                .find()
+                .then(staffs => {
+                    var usernames = staffs.map(staff => staff.username.toLowerCase());
+                    if (usernames.indexOf(username.toLowerCase()) == -1) {
+                        // Save the new staff
+                        new Staff({ username })
+                            .save()
+                            .then(() => {
+                                send(`${username} saved!`);
+                            })
+                            .catch(err => {
+                                send(`I encounter an error while trying to save the username to the database!`);
+                                console.log(err);
+                            });
+                    } else {
+                        send(`The username already exists!`);
+                    }
+                })
+                .catch(err => {
+                    send(`I encountered an error while trying to get staffs data from the database, please check the logs master!`);
+                    console.log(err);
+                })
+        } else {
+            send(`Invalid command, master!`);
+        }
+    }
+
+    else if (content.startsWith('misa dev staff remove')) {
+        var startIndex = content.indexOf('[');
+        var endIndex = content.indexOf(']');
+        if (startIndex != -1 && endIndex != -1 && endIndex - startIndex > 1) {
+            var username = originalContent.substring(startIndex + 1, endIndex);
+            Staff
+                .findOne({ username })
+                .then(staff => {
+                    if (staff) {
+                        staff
+                            .remove()
+                            .then(staff => {
+                                send(`${staff.username} removed!`);
+                            })
+                            .catch(err => {
+                                send(`There's an error! Please check the logs master!`);
+                                console.log(err);
+                            });
+                    } else {
+                        send(`I couldn't find the given username!`);
+                    }
+                })
+                .catch(err => {
+                    send(`I encountered an error while trying to get staffs data from the database, please check the logs master!`);
+                    console.log(err);
+                })
+        } else {
+            send(`Invalid command, master!`);
+        }
     }
 }

@@ -25,6 +25,9 @@ Bot.help_list = [
 Bot.dev_list = [
     'misa dev',
     'misa dev help',
+    'misa dev staff list',
+    'misa dev staff add [name]',
+    'misa dev staff remove [name]'
 ];
 
 Bot.staff_list = [
