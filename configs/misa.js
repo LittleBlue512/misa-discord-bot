@@ -19,7 +19,8 @@ Bot.help_list = [
     'misa kanji rand',
     'misa kanji list',
     'misa kanji list <from> <to>',
-    'misa kanji count'
+    'misa kanji count',
+    'misa kanji find <kanji>'
 ];
 
 Bot.dev_list = [

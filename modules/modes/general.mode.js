@@ -260,4 +260,34 @@ module.exports = (message) => {
                 send('Master! I encountered an error while trying to find the kanji in the database!');
             });
     }
+
+    else if (content.startsWith('misa kanji find')) {
+        var words = content.split(' ');
+        if (words.length == 4) {
+            var kanji = words[3];
+            if (kanji) {
+                Kanji
+                    .find()
+                    .then(kanjis => {
+                        var characters = kanjis.map(item => item.character);
+                        var targetIndex = characters.indexOf(kanji);
+                        if (targetIndex == -1) {
+                            send('Kanji not found!');
+                        } else {
+                            send(`Kanji found at the index of ${targetIndex + 1}`);
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        send('Look like something went wrong. I will have my master look into it!');
+                    });
+            } else {
+                // Invalid inputs
+                send(`Invalid input!`);
+            }
+        } else {
+            // Invalid too many arguments!
+            send(`Invalid command!`);
+        }
+    }
 };
