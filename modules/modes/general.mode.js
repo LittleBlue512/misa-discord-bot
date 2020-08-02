@@ -41,7 +41,7 @@ module.exports = (message) => {
             })
             .catch(err => {
                 console.log(err);
-                send('Look like something went wrong, I am going to have my master look into it!');
+                send('Look like something went wrong, please try again later!');
             });
     }
 
@@ -53,7 +53,7 @@ module.exports = (message) => {
             })
             .catch(err => {
                 console.log(err);
-                send('Look like something went wrong, I am going to have my master look into it!');
+                send('Look like something went wrong, please try again later!');
             });
     }
 
@@ -65,7 +65,7 @@ module.exports = (message) => {
             })
             .catch(err => {
                 console.log(err);
-                send('Look like something went wrong, I am going to have my master look into it!');
+                send('Look like something went wrong, please try again later!');
             });
     }
 
@@ -83,7 +83,7 @@ module.exports = (message) => {
             })
             .catch(err => {
                 console.log(err);
-                send('Look like something went wrong, I am going to have my master look into it!');
+                send('Look like something went wrong, please try again later!');
             });
     }
 
@@ -100,7 +100,7 @@ module.exports = (message) => {
             })
             .catch(err => {
                 console.log(err);
-                send('Look like something went wrong, I am going to have my master look into it!');
+                send('Look like something went wrong, please try again later!');
             });
     }
 
@@ -117,7 +117,7 @@ module.exports = (message) => {
             })
             .catch(err => {
                 console.log(err);
-                send('Look like something went wrong, I am going to have my master look into it!');
+                send('Look like something went wrong, please try again later!');
             });
     }
 
@@ -138,7 +138,7 @@ module.exports = (message) => {
                 })
                 .catch(err => {
                     console.log(err);
-                    send('Look like something went wrong, I am going to have my master look into it!');
+                    send('Look like something went wrong, please try again later!');
                 })
         }
     }
@@ -157,7 +157,7 @@ module.exports = (message) => {
                     if (err.response.status == 400) {
                         send('Invalid symbol!');
                     } else {
-                        send('Look like something went wrong, I am going to have my master look into it!');
+                        send('Look like something went wrong, please try again later!');
                     }
                 });
         } else {
@@ -173,7 +173,7 @@ module.exports = (message) => {
             })
             .catch(err => {
                 console.log(err);
-                send('Look like something went wrong, I am going to have my master look into it!');
+                send('Look like something went wrong, please try again later!');
             });
     }
 
@@ -185,7 +185,7 @@ module.exports = (message) => {
             })
             .catch(err => {
                 console.log(err);
-                send('Look like something went wrong, I am going to have my master look into it!');
+                send('Look like something went wrong, please try again later!');
             });
     }
 
@@ -202,7 +202,7 @@ module.exports = (message) => {
             })
             .catch(err => {
                 console.log(err);
-                send('Look like something went wrong, I am going to have my master look into it!');
+                send('Look like something went wrong, please try again later!');
             });
     }
 
@@ -219,7 +219,7 @@ module.exports = (message) => {
                 })
                 .catch(err => {
                     console.log(err);
-                    send('Master! I encountered an error while trying to find the kanji in the database!');
+                    send('Look like something went wrong, please try again later!');
                 })
         } else {
             if (words.length != 5) {
@@ -242,7 +242,7 @@ module.exports = (message) => {
                     })
                     .catch(err => {
                         console.log(err);
-                        send('Master! I encountered an error while trying to find the kanji in the database!');
+                        send('Look like something went wrong, please try again later!');
                     })
             }
         }
@@ -257,7 +257,7 @@ module.exports = (message) => {
             })
             .catch(err => {
                 console.log(err);
-                send('Master! I encountered an error while trying to find the kanji in the database!');
+                send('Look like something went wrong, please try again later!');
             });
     }
 
@@ -279,7 +279,7 @@ module.exports = (message) => {
                     })
                     .catch(err => {
                         console.log(err);
-                        send('Look like something went wrong. I will have my master look into it!');
+                        send('Look like something went wrong, please try again later!');
                     });
             } else {
                 // Invalid inputs

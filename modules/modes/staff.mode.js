@@ -40,7 +40,7 @@ module.exports = (message) => {
                 .then(() => send(`Done!`))
                 .catch(err => {
                     console.log(err);
-                    send('Master! I encountered an error while trying to find the kanji in the database!');
+                    send(`Look like something went wrong, please try again later or contact my master(${Misa.master})!`);
                 });
         } else {
             // Invalid inputs
@@ -59,7 +59,7 @@ module.exports = (message) => {
                 })
                 .catch(err => {
                     console.log(err);
-                    send('Master! I encountered an error while trying to find the kanji in the database!');
+                    send(`Look like something went wrong, please try again later or contact my master(${Misa.master})!`);
                 });
         } else {
             // Invalid inputs
