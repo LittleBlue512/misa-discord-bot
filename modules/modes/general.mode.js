@@ -198,7 +198,7 @@ module.exports = (message) => {
             .find()
             .then(kanjis => {
                 var randIndex = Math.round(Math.random() * kanjis.length);
-                send(yaml(kanjis[randIndex].character));
+                send(kanjis[randIndex].character);
             })
             .catch(err => {
                 console.log(err);
