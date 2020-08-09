@@ -212,10 +212,15 @@ module.exports = (message) => {
             Kanji
                 .find()
                 .then(kanjis => {
-                    var cnt = 1;
-                    var output = '';
-                    kanjis.forEach(kanji => output += `${cnt++}: ${kanji.character}\n`)
-                    send(yaml(output));
+                    var output = "";
+                    var characters = [];
+                    var charactersPerLine = 10;
+                    kanjis.forEach(kanji => characters.push(kanji.character))
+                    for (var i = 0; i < characters.length; i++) {
+                        if (i % charactersPerLine == 0) output += `\n${i}:   `;
+                        output += characters[i] + '   ';
+                    }
+                    send(output);
                 })
                 .catch(err => {
                     console.log(err);
@@ -233,11 +238,10 @@ module.exports = (message) => {
                         if (fromIndex < 1 || fromIndex > kanjis.length || toIndex < 1 || toIndex <= fromIndex || toIndex > kanjis.length) {
                             send(`Invalid input!`);
                         } else {
-                            var cnt = fromIndex;
-                            var output = '';
+                            var characters = [];
                             var subArray = kanjis.slice(fromIndex - 1, toIndex);
-                            subArray.forEach(kanji => output += `${cnt++}: ${kanji.character}\n`)
-                            send(yaml(output));
+                            subArray.forEach(kanji => characters.push(kanji.character));
+                            send(characters.join('   '));
                         }
                     })
                     .catch(err => {
