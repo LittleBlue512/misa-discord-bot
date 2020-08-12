@@ -22,7 +22,7 @@ module.exports = (message) => {
     yaml = (string) => '```yaml\n' + string + '\n```';
 
     if (content == 'misa') {
-        send('Yes?');
+        send(`I'm here, use "misa help" for more commands!`);
     }
 
     else if (content == 'misa help') {
