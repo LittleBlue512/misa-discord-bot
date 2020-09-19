@@ -193,17 +193,32 @@ module.exports = (message) => {
         send(`Misa's source code: https://github.com/LittleBlue512/misa-discord-bot`);
     }
 
-    else if (content == 'misa kanji rand') {
-        Kanji
-            .find()
-            .then(kanjis => {
-                var randIndex = Math.round(Math.random() * kanjis.length);
-                send(kanjis[randIndex].character);
-            })
-            .catch(err => {
-                console.log(err);
-                send('Look like something went wrong, please try again later!');
-            });
+    else if (content.startsWith('misa kanji rand')) {
+        var words = content.split(' ');
+        if (words.length == 4) {
+            var number = words[3];
+            Kanji
+                .find()
+                .then(kanjis => {
+                    if (number < 0 || number > kanjis.length) {
+                        send('Invalid input!');
+                    } else {
+                        var output = '';
+                        var randIndices = new Set();
+                        while (randIndices.size < number)   // Get random indices
+                            randIndices.add(Math.round(Math.random() * kanjis.length));
+                        for (var index of randIndices)      // Get kanjis
+                            output += kanjis[index].character + '\n';
+                        send(output);
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    send('Look like something went wrong, please try again later!');
+                });
+        } else {
+            send('Invalid input!');
+        }
     }
 
     else if (content.startsWith('misa kanji list')) {
@@ -212,7 +227,7 @@ module.exports = (message) => {
             Kanji
                 .find()
                 .then(kanjis => {
-                    var output = "";
+                    var output = '';
                     var characters = [];
                     var charactersPerLine = 10;
                     kanjis.forEach(kanji => characters.push(kanji.character))
@@ -228,7 +243,7 @@ module.exports = (message) => {
                 })
         } else {
             if (words.length != 5) {
-                send(`Invalid input!`);
+                send('Invalid input!');
             } else {
                 var fromIndex = words[3];
                 var toIndex = words[4];
@@ -236,7 +251,7 @@ module.exports = (message) => {
                     .find()
                     .then(kanjis => {
                         if (fromIndex < 1 || fromIndex > kanjis.length || toIndex < 1 || toIndex <= fromIndex || toIndex > kanjis.length) {
-                            send(`Invalid input!`);
+                            send('Invalid input!');
                         } else {
                             var characters = [];
                             var subArray = kanjis.slice(fromIndex - 1, toIndex);

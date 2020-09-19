@@ -16,7 +16,7 @@ Bot.help_list = [
     'misa binance [symbol]',
     'misa photo [width] [height]',
     'misa code',
-    'misa kanji rand',
+    'misa kanji rand <number>',
     'misa kanji list',
     'misa kanji list <from> <to>',
     'misa kanji count',
