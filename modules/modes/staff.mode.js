@@ -35,13 +35,28 @@ module.exports = (message) => {
         var words = content.split(' ');
         var kanji = words[4];
         if (kanji) {
-            new Kanji({ character: kanji })
-                .save()
-                .then(() => send(`Done!`))
+            Kanji
+                .find()
+                .then(kanjis => {
+                    var characters = kanjis.map(item => item.character);
+                    var targetIndex = characters.indexOf(kanji);
+                    if (targetIndex == -1) {
+                        new Kanji({ character: kanji })
+                            .save()
+                            .then(() => send(`Done!`))
+                            .catch(err => {
+                                console.log(err);
+                                send(`Look like something went wrong, please try again later or contact my master(${Misa.master})!`);
+                            });
+                    } else {
+                        send(`${kanji} is already added!`);
+                    }
+                })
                 .catch(err => {
                     console.log(err);
-                    send(`Look like something went wrong, please try again later or contact my master(${Misa.master})!`);
+                    send('Look like something went wrong, please try again later!');
                 });
+
         } else {
             // Invalid inputs
             send(`Invalid input!`);
