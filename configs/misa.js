@@ -28,7 +28,8 @@ Bot.dev_list = [
     'misa dev help',
     'misa dev staff list',
     'misa dev staff add [name]',
-    'misa dev staff remove [name]'
+    'misa dev staff remove [name]',
+    'misa i love you'
 ];
 
 Bot.staff_list = [
@@ -45,7 +46,7 @@ Bot.prefixs = {
 };
 
 Bot.channels = {
-    dev: 'misa-bot-dev'
+    dev: '💾-dev'
 };
 
 Bot.master = 'LittleBlue';

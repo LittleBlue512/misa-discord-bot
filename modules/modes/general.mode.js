@@ -309,4 +309,13 @@ module.exports = (message) => {
             send(`Invalid command!`);
         }
     }
+
+    // ...
+    else if (content == 'misa, i love you!' || content == 'misa, i love you' || content == 'misa i love you!' || content == 'misa i love you' || content == 'i love misa') {
+        if (username == Misa.master) {
+            send('I love you too, master!');
+        } else {
+            send('(🌸≧‿≦)');
+        }
+    }
 };
