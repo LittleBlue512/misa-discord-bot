@@ -23,6 +23,14 @@ var StaffSchema = new Schema({
     }
 });
 
+var CleanChatPrefixSchema = new Schema({
+    prefix: {
+        type: String,
+        required: true
+    }
+});
+
+connection.model('CleanChatPrefix', CleanChatPrefixSchema);
 connection.model('Kanji', KanjiSchema);
 connection.model('Staff', StaffSchema);
 

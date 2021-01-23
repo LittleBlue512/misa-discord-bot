@@ -14,8 +14,7 @@ module.exports = (message) => {
     content = content.toLowerCase();
 
     // Validations
-    if (message.author.bot) return;                             // Ignore bots
-    if (!content.startsWith(Misa.prefixs.general)) return;      // Prefix required
+    if (!content.startsWith(Misa.prefixes.general)) return;      // Prefix required
 
     // Handy function ~
     send = (string) => message.channel.send(string);
@@ -31,60 +30,6 @@ module.exports = (message) => {
             output += `- ${command}\n`;
         });
         send(`How can I help you, ${username}?\n${output}`);
-    }
-
-    else if (content == 'misa cat') {
-        send(`I'm finding a cat picture...`);
-        Axios.get(Misa.apis.CATPICS_API)
-            .then(res => {
-                message.channel.send('I love cats!', { files: [res.data[0].url] });
-            })
-            .catch(err => {
-                console.log(err);
-                send('Look like something went wrong, please try again later!');
-            });
-    }
-
-    else if (content == 'misa cat fact') {
-        send(`I'm finding a cat fact...`);
-        Axios.get(Misa.apis.CATFACTS_API)
-            .then(res => {
-                send(res.data.text);
-            })
-            .catch(err => {
-                console.log(err);
-                send('Look like something went wrong, please try again later!');
-            });
-    }
-
-    else if (content == 'misa shiba') {
-        send(`I'm finding a shiba picture...`);
-        Axios.get(Misa.apis.SHIBAS_API)
-            .then(res => {
-                message.channel.send('I love shibas!', { files: [res.data[0]] });
-            })
-            .catch(err => {
-                console.log(err);
-                send('Look like something went wrong, please try again later!');
-            });
-    }
-
-    else if (content == 'misa joke') {
-        send(`I'm finding a joke...`);
-        Axios.get(Misa.apis.JOKES_API)
-            .then(res => {
-                var data = res.data;
-                if (data.type == 'single') {
-                    send(`${data.joke}`);
-                } else if (data.type == 'twopart') {
-                    send(`${data.setup}`);
-                    send(`${data.delivery}`);
-                }
-            })
-            .catch(err => {
-                console.log(err);
-                send('Look like something went wrong, please try again later!');
-            });
     }
 
     else if (content == 'misa covid19 thai') {
@@ -117,75 +62,7 @@ module.exports = (message) => {
             })
             .catch(err => {
                 console.log(err);
-                send('Look like something went wrong, please try again later!');
-            });
-    }
-
-    else if (content.startsWith('misa photo')) {
-        var startIndex1 = content.indexOf('[');
-        var endIndex1 = content.indexOf(']');
-        var startIndex2 = content.indexOf('[', startIndex1 + 1);
-        var endIndex2 = content.indexOf(']', endIndex1 + 1);
-        var width = content.substring(startIndex1 + 1, endIndex1);
-        var height = content.substring(startIndex2 + 1, endIndex2);
-        if (startIndex1 == -1 || endIndex1 == -1 || startIndex2 == -1 || endIndex2 == -1 || endIndex1 - startIndex1 == 1 || endIndex2 - startIndex2 == 1) {
-            send(`Sorry, I don't understand your command.`)
-        } else {
-            send(`I'm finding a photo...`)
-            Axios.get(Misa.apis.PHOTO_API + `/${width}/${height}`)
-                .then(res => {
-                    message.channel.send({ files: [res.request.res.responseUrl] });
-                })
-                .catch(err => {
-                    console.log(err);
-                    send('Look like something went wrong, please try again later!');
-                })
-        }
-    }
-
-    else if (content.startsWith('misa binance')) {
-        var startIndex = content.indexOf('[');
-        var endIndex = content.indexOf(']');
-        if (startIndex != -1 && endIndex != -1 && endIndex - startIndex != 1) {
-            var symbol = content.substring(startIndex + 1, endIndex).toUpperCase();
-            send(`I'm finding the data...`);
-            Axios.get(Misa.apis.BINANCE_PRICE_API + symbol)
-                .then(res => {
-                    send(`Here's the price from Binance.com:\n${symbol}: ${res.data.price}`);
-                })
-                .catch(err => {
-                    if (err.response.status == 400) {
-                        send('Invalid symbol!');
-                    } else {
-                        send('Look like something went wrong, please try again later!');
-                    }
-                });
-        } else {
-            send(`Sorry, I don't understand your command.`);
-        }
-    }
-
-    else if (content == 'misa quote') {
-        send(`I'm finding a quote...`);
-        Axios.get(Misa.apis.QUOTE_API)
-            .then(res => {
-                send(res.data.quote.quoteText)
-            })
-            .catch(err => {
-                console.log(err);
-                send('Look like something went wrong, please try again later!');
-            });
-    }
-
-    else if (content == 'misa prog quote') {
-        send(`I'm finding a programming quote...`);
-        Axios.get(Misa.apis.PROGRAMMING_QUOTE_API)
-            .then(res => {
-                send(res.data.en)
-            })
-            .catch(err => {
-                console.log(err);
-                send('Look like something went wrong, please try again later!');
+                send('Look like something went wrong. Please try again later!');
             });
     }
 
@@ -214,7 +91,7 @@ module.exports = (message) => {
                 })
                 .catch(err => {
                     console.log(err);
-                    send('Look like something went wrong, please try again later!');
+                    send('Look like something went wrong. Please try again later!');
                 });
         } else {
             send('Invalid input!');
@@ -261,7 +138,7 @@ module.exports = (message) => {
                     })
                     .catch(err => {
                         console.log(err);
-                        send('Look like something went wrong, please try again later!');
+                        send('Look like something went wrong. Please try again later!');
                     })
             }
         }
@@ -298,15 +175,15 @@ module.exports = (message) => {
                     })
                     .catch(err => {
                         console.log(err);
-                        send('Look like something went wrong, please try again later!');
+                        send('Look like something went wrong. Please try again later!');
                     });
             } else {
                 // Invalid inputs
-                send(`Invalid input!`);
+                send('Invalid input!');
             }
         } else {
             // Invalid too many arguments!
-            send(`Invalid command!`);
+            send('Invalid command!');
         }
     }
 

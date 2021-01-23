@@ -12,9 +12,8 @@ module.exports = (message) => {
     content = content.toLowerCase();
 
     // Validations
-    if (message.author.bot) return;                         // Ignore bots
     if (authorUsername != Misa.master) return;              // Only master
-    if (!content.startsWith(Misa.prefixs.dev)) return;      // Prefix required
+    if (!content.startsWith(Misa.prefixes.dev)) return;      // Prefix required
 
     // Handy function ~
     send = (string) => message.channel.send(string);
@@ -34,9 +33,13 @@ module.exports = (message) => {
     }
 
     else if (content == 'misa dev staff list') {
-        var output = '';
-        Misa.staffs.forEach(staff => output += staff + '\n');
-        send(yaml(output));
+        if (Misa.staffs.length == 0) {
+            send('The list is empty!');
+        } else {
+            var output = '';
+            Misa.staffs.forEach(staff => output += staff + '\n');
+            send(yaml(output));
+        }
     }
 
     else if (content.startsWith('misa dev staff add')) {
@@ -48,6 +51,7 @@ module.exports = (message) => {
                 .find()
                 .then(staffs => {
                     var usernames = staffs.map(staff => staff.username.toLowerCase());
+                    // Check duplicates
                     if (usernames.indexOf(username.toLowerCase()) == -1) {
                         // Save the new staff
                         new Staff({ username })
@@ -58,19 +62,19 @@ module.exports = (message) => {
                                 helpers.getStaffs();
                             })
                             .catch(err => {
-                                send(`I encounter an error while trying to save the username to the database!`);
+                                send('I encounter an error while trying to save the username to the database!');
                                 console.log(err);
                             });
                     } else {
-                        send(`The username already exists!`);
+                        send('The username already exists!');
                     }
                 })
                 .catch(err => {
-                    send(`I encountered an error while trying to get staffs data from the database, please check the logs master!`);
+                    send('I encountered an error while trying to get staffs data from the database. Please check the logs, master!');
                     console.log(err);
                 })
         } else {
-            send(`Invalid command, master!`);
+            send('Invalid command, master!');
         }
     }
 
@@ -85,8 +89,8 @@ module.exports = (message) => {
                     if (staff) {
                         staff
                             .remove()
-                            .then(staff => {
-                                send(`${staff.username} removed!`);
+                            .then(() => {
+                                send(`${username} removed!`);
                                 // Update staffs
                                 helpers.getStaffs();
                             })
@@ -99,11 +103,11 @@ module.exports = (message) => {
                     }
                 })
                 .catch(err => {
-                    send(`I encountered an error while trying to get staffs data from the database, please check the logs master!`);
+                    send('I encountered an error while trying to get staffs data from the database, please check the logs master!');
                     console.log(err);
                 })
         } else {
-            send(`Invalid command, master!`);
+            send('Invalid command, master!');
         }
     }
 }

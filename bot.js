@@ -9,6 +9,8 @@ dotenv.config();
 client.on('ready', () => {
     console.log(`Getting staffs...`);
     helpers.getStaffs();
+    console.log(`Getting prefixs for clean chat...`);
+    helpers.getCleanChatPrefixes();
     console.log(`Logged in as ${client.user.tag}`);
 });
 

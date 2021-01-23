@@ -5,22 +5,15 @@ Bot.name = 'Misa';
 Bot.help_list = [
     'misa',
     'misa help',
-    'misa cat',
-    'misa cat fact',
-    'misa shiba',
-    'misa joke',
-    'misa quote',
-    'misa prog quote',
     'misa covid19 thai',
     'misa covid19 global',
-    'misa binance [symbol]',
-    'misa photo [width] [height]',
     'misa code',
     'misa kanji rand <number>',
     'misa kanji list',
     'misa kanji list <from> <to>',
     'misa kanji count',
-    'misa kanji find <kanji>'
+    'misa kanji find <kanji>',
+    'misa i love you'
 ];
 
 Bot.dev_list = [
@@ -29,7 +22,7 @@ Bot.dev_list = [
     'misa dev staff list',
     'misa dev staff add [name]',
     'misa dev staff remove [name]',
-    'misa i love you'
+
 ];
 
 Bot.staff_list = [
@@ -37,9 +30,12 @@ Bot.staff_list = [
     'misa staff help',
     'misa staff kanji add <kanji>',
     'misa staff kanji remove <kanji>',
+    'misa staff cleanchatprefix list',
+    'misa staff cleanchatprefix add <prefix>',
+    'misa staff cleanchatprefix remove <prefix>',
 ];
 
-Bot.prefixs = {
+Bot.prefixes = {
     general: 'misa',
     dev: 'misa dev',
     staff: 'misa staff'
@@ -50,8 +46,6 @@ Bot.channels = {
 };
 
 Bot.master = 'LittleBlue';
-
-Bot.staffs = [];
 
 Bot.apis = {
     CATPICS_API: 'https://api.thecatapi.com/v1/images/search',
@@ -65,5 +59,9 @@ Bot.apis = {
     QUOTE_API: 'https://quote-garden.herokuapp.com/api/v2/quotes/random',
     PHOTO_API: 'https://picsum.photos',
 };
+
+// Load from database
+Bot.cleanChatPrefixes = [];
+Bot.staffs = [];
 
 module.exports = Bot;

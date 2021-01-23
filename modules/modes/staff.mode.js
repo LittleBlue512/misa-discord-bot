@@ -1,6 +1,8 @@
 var Misa = require('../../configs/misa');
 var connection = require('../../configs/database');
 var Kanji = connection.models.Kanji;
+var helpers = require('../helpers');
+var CleanChatPrefix = connection.models.CleanChatPrefix;
 
 module.exports = (message) => {
     var content = message.content;
@@ -10,9 +12,8 @@ module.exports = (message) => {
     content = content.toLowerCase();
 
     // Validations
-    if (message.author.bot) return;                             // Ignore bots
     if (Misa.staffs.indexOf(username) == -1) return;            // Only staff
-    if (!content.startsWith(Misa.prefixs.staff)) return;        // Prefix required
+    if (!content.startsWith(Misa.prefixes.staff)) return;        // Prefix required
 
     // Handy function ~
     send = (string) => message.channel.send(string);
@@ -39,14 +40,13 @@ module.exports = (message) => {
                 .find()
                 .then(kanjis => {
                     var characters = kanjis.map(item => item.character);
-                    var targetIndex = characters.indexOf(kanji);
-                    if (targetIndex == -1) {
+                    if (characters.indexOf(kanji) == -1) {
                         new Kanji({ character: kanji })
                             .save()
-                            .then(() => send(`Done!`))
+                            .then(() => send('Done!'))
                             .catch(err => {
                                 console.log(err);
-                                send(`Look like something went wrong, please try again later or contact my master(${Misa.master})!`);
+                                send(`Look like something went wrong, please try again later! or contact my master! ${Misa.master}`);
                             });
                     } else {
                         send(`${kanji} is already added!`);
@@ -54,12 +54,12 @@ module.exports = (message) => {
                 })
                 .catch(err => {
                     console.log(err);
-                    send('Look like something went wrong, please try again later!');
+                    send(`Look like something went wrong, please try again later! or contact my master! ${Misa.master}`);
                 });
 
         } else {
             // Invalid inputs
-            send(`Invalid input!`);
+            send('Invalid input!');
         }
     }
 
@@ -70,15 +70,92 @@ module.exports = (message) => {
             Kanji
                 .findOneAndDelete({ character: kanji })
                 .then(() => {
-                    send(`Done!`);
+                    send('Done!');
                 })
                 .catch(err => {
                     console.log(err);
-                    send(`Look like something went wrong, please try again later or contact my master(${Misa.master})!`);
+                    send(`Look like something went wrong. Please try again later or contact my master! ${Misa.master}`);
                 });
         } else {
             // Invalid inputs
-            send(`Invalid input!`);
+            send('Invalid input!');
+        }
+    }
+
+    else if (content.startsWith('misa staff cleanchatprefix list')) {
+        if (Misa.cleanChatPrefixes.length == 0) {
+            send('The list is empty!');
+        } else {
+            var output = '';
+            Misa.cleanChatPrefixes.forEach(prefix => output += prefix + '\n');
+            send(yaml(output));
+        }
+    }
+
+    else if (content.startsWith('misa staff cleanchatprefix add')) {
+        var words = content.split(' ');
+        if (words.length != 5) {
+            send('Invalid command!');
+        } else {
+            var prefix = words[4].toLowerCase();
+            CleanChatPrefix
+                .find()
+                .then(data => {
+                    var prefixes = data.map(item => item.prefix.toLowerCase());
+                    // Check duplicates
+                    if (prefixes.indexOf(prefix) == -1) {
+                        // Add new prefix
+                        new CleanChatPrefix({ prefix })
+                            .save()
+                            .then(() => {
+                                send(`${prefix} saved!`);
+                                // Update prefixes list
+                                helpers.getCleanChatPrefixes();
+                            })
+                            .catch(err => {
+                                send(`I encounter an error while trying to save the prefix for clean chat to the database. Please try again later or contact my master! ${Misa.master}`);
+                                console.log(err);
+                            })
+                    } else {
+                        send(`The prefix already exists!`);
+                    }
+                })
+                .catch(err => {
+                    send(`I encountered an error while trying to get the prefixes for clean chat from the database. Please try again later or contact my master! ${Misa.master}`);
+                    console.log(err);
+                })
+        }
+    }
+
+    else if (content.startsWith('misa staff cleanchatprefix remove')) {
+        var words = content.split(' ');
+        if (words.length != 5) {
+            send(`Invalid command!`);
+        } else {
+            var prefix = words[4].toLowerCase();
+            CleanChatPrefix
+                .findOne({ prefix })
+                .then(item => {
+                    if (item) {
+                        item
+                            .remove()
+                            .then(() => {
+                                send(`${prefix} removed!`);
+                                // Update prefixes list
+                                helpers.getCleanChatPrefixes();
+                            })
+                            .catch(err => {
+                                send(`There's an error! Please try again later or contact my master! ${Misa.master}`);
+                                console.log(err);
+                            });
+                    } else {
+                        send(`I couldn't find the given prefix!`);
+                    }
+                })
+                .catch(err => {
+                    send(`I encountered an error while trying to get the prefixes for clean chat from the database. Please try again later or contact my master! ${Misa.master}`);
+                    console.log(err);
+                })
         }
     }
 }
